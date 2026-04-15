@@ -100,8 +100,8 @@ namespace OOP_Puhtejev
                         Console.WriteLine("Tunnid nädalas?: (nt 30)");
                         direktor.TunnidNädalas = int.Parse(Console.ReadLine());
 
-                        Console.WriteLine("Aine?: ");
-                        direktor.Aine = Console.ReadLine();
+                        Console.WriteLine("LisaTasu?: ");
+                        direktor.LisaTasu = double.Parse(Console.ReadLine());
 
                         palgasaajad.Add(direktor);
                         minuKool.LisaInimene(direktor);
@@ -127,7 +127,7 @@ namespace OOP_Puhtejev
                         õpilane2.Puudumised = int.Parse(Console.ReadLine());
 
                         Console.WriteLine("Sinu Keskminehinne?: ");
-                        õpilane2.Keskminehinne = int.Parse(Console.ReadLine());
+                        õpilane2.Keskminehinne = double.Parse(Console.ReadLine());
 
                         õpilane2.Staatus = vormid[rnd.Next(1, 4)];
 
