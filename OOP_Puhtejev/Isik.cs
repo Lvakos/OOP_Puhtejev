@@ -7,13 +7,28 @@ namespace OOP_Puhtejev
     public abstract class Isik
     {
         // Privaatne väli - otse ligi ei saa
-        private int sünniaasta;
+        public int Sünniaasta;
 
         // Avalik omadus (Property) automaatse get/set logikaga
         public string Nimi { get; set; }
 
+        public static int InimesteKoguarv = 0;
+
+
         // Kontrollitud omadus
-        public int Sünniaasta
+        public Isik(string nimi, int sünniaasta)
+        {
+            Nimi = nimi;
+            Sünniaasta = sünniaasta;
+            InimesteKoguarv++;
+        }
+
+        protected Isik()
+        {
+
+        }
+
+        public int sünniaasta
         {
             get { return sünniaasta; }
             set
@@ -46,6 +61,6 @@ namespace OOP_Puhtejev
 
 
         // Abstraktne meetod – sisu puudub, alamklassid PEAVAD selle ise looma
-        public abstract void Kirjelda();
+        public abstract string Kirjelda();
     }
 }

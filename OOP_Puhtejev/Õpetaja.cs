@@ -22,11 +22,22 @@ namespace OOP_Puhtejev
             return Tunnitasu * TunnidNädalas * 4;
         }
 
-        public override void Kirjelda()
+        public override string Kirjelda()
         {
-            Console.WriteLine($"Mina olen õpetaja {Nimi} ja ma õpetan: {Aine}. Minu palk on {ArvutaPalk()}.");
+            return $"Mina olen õpetaja {Nimi} ja ma õpetan: {Aine}. Minu palk on {ArvutaPalk()}.";
         }
 
+        public Õpetaja() : base() // kutsume baasklassi konstruktorit
+        {
+            // Siin saame teha täiendavaid initsialiseerimisi, kui vaja
+        }
+
+        public Õpetaja(string nimi, string aine, int sünniaasta) : base(nimi, sünniaasta) // Kutsume baasklassi
+        {
+            Nimi = nimi;
+            Aine = aine;
+            Sünniaasta = sünniaasta;
+        }
     }
 
     public class Direktor : Isik, ITööline
@@ -39,9 +50,9 @@ namespace OOP_Puhtejev
         {
             return (Tunnitasu + LisaTasu) * TunnidNädalas * 4;
         }
-        public override void Kirjelda()
+        public override string Kirjelda()
         {
-            Console.WriteLine($"Mina olen kooli Direktor {Nimi}. Minu palk on {ArvutaPalk()}.");
+            return $"Mina olen kooli Direktor {Nimi}. Minu palk on {ArvutaPalk()}.";
         }
     }
 }

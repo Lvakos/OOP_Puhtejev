@@ -1,13 +1,16 @@
 ﻿using System.Numerics;
+using System.IO;
 
 namespace OOP_Puhtejev
 {
     internal class Program
     {
+
+
         public class Koolihaldus
         {
             // Kapseldatud list
-            private List<Isik> inimesed = new List<Isik>();
+            public List<Isik> inimesed = new List<Isik>();
 
             public void LisaInimene(Isik isik)
             {
@@ -21,21 +24,60 @@ namespace OOP_Puhtejev
                 {
                     // Polümorfism teeb siin imesid! 
                     // C# teab ise, kas käivitada Õpetaja või Õpilase Kirjelda() meetod.
-                    isik.Kirjelda();
+                    Console.WriteLine(isik.Kirjelda());
                 }
             }
-        }
+
+            public void LisaInimene(List<Isik> uuedInimesed)
+            {
+                inimesed.AddRange(uuedInimesed);
+            }
+
+            public void Otsi(string otsitavNimi)
+            {
+                Console.WriteLine($"\nOtsime nime: {otsitavNimi}");
+                foreach (var isik in inimesed)
+                {
+                    if (isik.Nimi.Contains(otsitavNimi)) Console.WriteLine(isik.Kirjelda());
+                }
+            }
+
+            public void Otsi(int sünniaasta)
+            {
+                Console.WriteLine($"\nOtsime kedagi, kellel tunnitasu on: {sünniaasta}");
+                // Siin eeldame, et lisasime Isik klassile ka Sünniaasta tagasi
+                foreach (var isik in inimesed)
+                {
+                    if (isik.Sünniaasta == (sünniaasta)) Console.WriteLine(isik.Kirjelda());
+                }
+            }
+
+            public void SalvestaFaili(string failinimi)
+                {
+                    using (StreamWriter writer = new StreamWriter(failinimi))
+                    {
+                        foreach (var isik in inimesed)
+                        {
+                            writer.WriteLine(isik.Kirjelda());
+                        }
+                    }
+                }
+
+            }
 
         static void Main(string[] args)
         {
+            string path = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "inimesed.txt");
 
-            /*Console.WriteLine("{==== Õpetajad ====}");
+            Console.WriteLine("{==== Õpetajad ====}");
             Õpetaja õpetaja1 = new Õpetaja();
             õpetaja1.Nimi = "Marina";
             õpetaja1.Sünniaasta = 1995;
             õpetaja1.Tunnitasu = 13.8;
             õpetaja1.TunnidNädalas = 30;
             õpetaja1.Aine = "programmeerimine";
+
+            Õpetaja irina = new Õpetaja("Irina", "Programmeerimine", 2000);
 
 
             Õpilane õpilane1 = new Õpilane();
@@ -47,9 +89,13 @@ namespace OOP_Puhtejev
             õpilane1.Keskminehinne = 4;
             õpilane1.KasOnSotsTõend = false;
 
-            Console.WriteLine($"Toetus on: {õpilane1.ArvutaPalk()} eur.");*/
+            Õpilane olga = new Õpilane("Olga", "TTHK", 9, 2009);
+
+            Console.WriteLine($"Toetus on: {õpilane1.ArvutaPalk()} eur.");
             List<ITööline> palgasaajad = new List<ITööline>();
             Koolihaldus minuKool = new Koolihaldus();
+            minuKool.LisaInimene(olga);
+            minuKool.LisaInimene(irina);
 
             while (true)
             {
@@ -151,7 +197,27 @@ namespace OOP_Puhtejev
 
                     else if (valik.ToLower() == "koolimaja")
                     {
+                        Console.WriteLine($"Kõik inimeste arv: {Isik.InimesteKoguarv}");
                         minuKool.KuvaKõik();
+                    }
+
+                    else if (valik.ToLower() == "otsi")
+                    {
+                        Console.WriteLine("Kirjuta sünniaasta või nimi: ");
+                        string Andmed = Console.ReadLine();
+                        if (int.TryParse(Andmed, out int sünniaasta))
+                        {
+                            minuKool.Otsi(sünniaasta);
+                        }
+                        else
+                        {
+                            minuKool.Otsi(Andmed);
+                        }
+                    }
+
+                    else if (valik.ToLower() == "salvesta faili")
+                    {
+                        minuKool.SalvestaFaili(path);
                     }
 
 
@@ -161,7 +227,6 @@ namespace OOP_Puhtejev
                     Console.WriteLine(e);
                 }
             }
-            
         }
     }
 }

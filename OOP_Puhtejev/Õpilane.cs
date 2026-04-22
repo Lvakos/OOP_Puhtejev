@@ -14,6 +14,19 @@ namespace OOP_Puhtejev
         public int Puudumised { get; set; } = 0;//põhitoetus
         public bool KasOnSotsTõend { get; set; } = false; //eritoetus 120eur
 
+        public Õpilane() : base() // kutsume baasklassi konstruktorit
+        {
+            // Siin saame teha täiendavaid initsialiseerimisi, kui vaja
+        }
+
+        public Õpilane(string nimi, string kool, int klass, int sünniaasta) : base(nimi, sünniaasta) // Kutsume baasklassi
+        {
+            Nimi = nimi;
+            Kool = kool;
+            Sünniaasta = sünniaasta;
+            Klass = klass;
+        }
+
         public TööTüüp VäljamakseTüüp { get; set; } = TööTüüp.Palk;
 
         public void Õpi()
@@ -21,9 +34,9 @@ namespace OOP_Puhtejev
             Console.WriteLine($"{Nimi} õpib {Kool} {Klass}. kursuses.");
         }
 
-        public override void Kirjelda()
+        public override string Kirjelda()
         {
-            Console.WriteLine($"Mina olen õpilane {Nimi} ja käin {Klass}. kursuses.");
+           return $"Mina olen õpilane {Nimi} ja käin {Klass}. kursuses.";
         }
 
         public double ArvutaPalk()
