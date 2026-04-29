@@ -5,7 +5,7 @@ namespace OOP_Puhtejev
 {
     internal class Program
     {
-
+        
 
         public class Koolihaldus
         {
@@ -102,126 +102,133 @@ namespace OOP_Puhtejev
                 Console.WriteLine("\n--- KOOLI PROGRAMM ---");
                 Random rnd = new Random();
                 Õppevorm[] vormid = (Õppevorm[])Enum.GetValues(typeof(Õppevorm));
-                Console.WriteLine("Kes sa oled, õpetaja, õpilane või direktor? / Kui tahate vaada palga, kirjuta (vaata palga) / Kui tahate vaata kõik inimesed koolimaja, kirjuta (koolimaja)");
-                string valik = Console.ReadLine();
+                Console.WriteLine("""
+                    Valikud:
+                    1. Õpetaja Lisamine
+                    2. Direktori Lisamine
+                    3. Õpilane Lisamine
+                    4. Vaata palga
+                    5. Vaata koguinimeste arv
+                    6. Koolimaja inimene otsimine
+                    7. Salvesta inimesed failis 
+                    """);
 
                 try
                 {
-                    if (valik.ToLower() == "õpetaja")
+                    string valik = Console.ReadLine();
+                    switch (valik)
                     {
-                        Õpetaja õpetaja2 = new Õpetaja();
+                        case "1":
+                            Õpetaja õpetaja2 = new Õpetaja();
 
-                        Console.WriteLine("Sinu nimi?: ");
-                        õpetaja2.Nimi = Console.ReadLine();
+                            Console.WriteLine("Sinu nimi?: ");
+                            õpetaja2.Nimi = Console.ReadLine();
 
-                        Console.WriteLine("Sünniaasta?: ");
-                        õpetaja2.Sünniaasta = int.Parse(Console.ReadLine());
+                            Console.WriteLine("Sünniaasta?: ");
+                            õpetaja2.Sünniaasta = int.Parse(Console.ReadLine());
 
-                        Console.WriteLine("Tunnitasu? (nt 13.8): ");
-                        õpetaja2.Tunnitasu = double.Parse(Console.ReadLine());
+                            Console.WriteLine("Tunnitasu? (nt 13.8): ");
+                            õpetaja2.Tunnitasu = double.Parse(Console.ReadLine());
 
-                        Console.WriteLine("Tunnid nädalas?: (nt 30)");
-                        õpetaja2.TunnidNädalas = int.Parse(Console.ReadLine());
+                            Console.WriteLine("Tunnid nädalas?: (nt 30)");
+                            õpetaja2.TunnidNädalas = int.Parse(Console.ReadLine());
 
-                        Console.WriteLine("Aine?: ");
-                        õpetaja2.Aine = Console.ReadLine();
+                            Console.WriteLine("Aine?: ");
+                            õpetaja2.Aine = Console.ReadLine();
 
-                        palgasaajad.Add(õpetaja2);
-                        minuKool.LisaInimene(õpetaja2);
+                            palgasaajad.Add(õpetaja2);
+                            minuKool.LisaInimene(õpetaja2);
+                            break;
+
+                        case "2":
+                        
+                            Direktor direktor = new Direktor();
+
+                            Console.WriteLine("Sinu nimi?: ");
+                            direktor.Nimi = Console.ReadLine();
+
+                            Console.WriteLine("Sünniaasta?: ");
+                            direktor.Sünniaasta = int.Parse(Console.ReadLine());
+
+                            Console.WriteLine("Tunnitasu? (nt 13.8): ");
+                            direktor.Tunnitasu = double.Parse(Console.ReadLine());
+
+                            Console.WriteLine("Tunnid nädalas?: (nt 30)");
+                            direktor.TunnidNädalas = int.Parse(Console.ReadLine());
+
+                            Console.WriteLine("LisaTasu?: ");
+                            direktor.LisaTasu = double.Parse(Console.ReadLine());
+
+                            palgasaajad.Add(direktor);
+                            minuKool.LisaInimene(direktor);
+                            break;
+
+                        case "3":
+                            Õpilane õpilane2 = new Õpilane();
+
+                            Console.WriteLine("Sinu nimi?: ");
+                            õpilane2.Nimi = Console.ReadLine();
+
+                            Console.WriteLine("Sünniaasta?: ");
+                            õpilane2.Sünniaasta = int.Parse(Console.ReadLine());
+
+                            Console.WriteLine("Kus sa õpid?: ");
+                            õpilane2.Kool = Console.ReadLine();
+
+                            Console.WriteLine("Millises kursuses sa õpid? (nt 1): ");
+                            õpilane2.Klass = int.Parse(Console.ReadLine());
+
+                            Console.WriteLine("Kui palju puudumised sul on?: ");
+                            õpilane2.Puudumised = int.Parse(Console.ReadLine());
+
+                            Console.WriteLine("Sinu Keskminehinne?: ");
+                            õpilane2.Keskminehinne = double.Parse(Console.ReadLine());
+
+                            õpilane2.Staatus = vormid[rnd.Next(1, 4)];
+
+                            Console.WriteLine("Kas sulle on vaja sotsiaalne tõend? (eritoetus) jah/ei: ");
+                            string eritoetusValik = Console.ReadLine();
+                            if (eritoetusValik.ToLower() == "jah")
+                                õpilane2.KasOnSotsTõend = true;
+
+                            palgasaajad.Add(õpilane2);
+                            minuKool.LisaInimene(õpilane2);
+                            break;
+
+                        case "4":
+                            foreach (ITööline isik in palgasaajad)
+                            {
+                                string tüüp = isik.VäljamakseTüüp.ToString().ToLower();
+                                Console.WriteLine($"{tüüp} summa: {isik.ArvutaPalk()} eurot. {((Isik)isik).Nimi}");
+                            }
+                            break;
+                        case "5":
+                            Console.WriteLine($"Kõik inimeste arv: {Isik.InimesteKoguarv}");
+                            minuKool.KuvaKõik();
+                            break;
+
+                        case "6":
+                            Console.WriteLine("Kirjuta sünniaasta või nimi: ");
+                            string Andmed = Console.ReadLine();
+                            if (int.TryParse(Andmed, out int sünniaasta))
+                            {
+                                minuKool.Otsi(sünniaasta);
+                            }
+                            else
+                            {
+                                minuKool.Otsi(Andmed);
+                            }
+                            break;
+
+                        case "7":
+                            minuKool.SalvestaFaili(path);
+                            break;
+                        default:
+                            Console.WriteLine("Valik puudub");
+                            break;
                     }
-
-                    else if (valik.ToLower() == "direktor")
-                    {
-                        Direktor direktor = new Direktor();
-
-                        Console.WriteLine("Sinu nimi?: ");
-                        direktor.Nimi = Console.ReadLine();
-
-                        Console.WriteLine("Sünniaasta?: ");
-                        direktor.Sünniaasta = int.Parse(Console.ReadLine());
-
-                        Console.WriteLine("Tunnitasu? (nt 13.8): ");
-                        direktor.Tunnitasu = double.Parse(Console.ReadLine());
-
-                        Console.WriteLine("Tunnid nädalas?: (nt 30)");
-                        direktor.TunnidNädalas = int.Parse(Console.ReadLine());
-
-                        Console.WriteLine("LisaTasu?: ");
-                        direktor.LisaTasu = double.Parse(Console.ReadLine());
-
-                        palgasaajad.Add(direktor);
-                        minuKool.LisaInimene(direktor);
-                    }
-
-                    else if (valik.ToLower() == "õpilane")
-                    {
-                        Õpilane õpilane2 = new Õpilane();
-
-                        Console.WriteLine("Sinu nimi?: ");
-                        õpilane2.Nimi = Console.ReadLine();
-
-                        Console.WriteLine("Sünniaasta?: ");
-                        õpilane2.Sünniaasta = int.Parse(Console.ReadLine());
-
-                        Console.WriteLine("Kus sa õpid?: ");
-                        õpilane2.Kool = Console.ReadLine();
-
-                        Console.WriteLine("Millises kursuses sa õpid? (nt 1): ");
-                        õpilane2.Klass = int.Parse(Console.ReadLine());
-
-                        Console.WriteLine("Kui palju puudumised sul on?: ");
-                        õpilane2.Puudumised = int.Parse(Console.ReadLine());
-
-                        Console.WriteLine("Sinu Keskminehinne?: ");
-                        õpilane2.Keskminehinne = double.Parse(Console.ReadLine());
-
-                        õpilane2.Staatus = vormid[rnd.Next(1, 4)];
-
-                        Console.WriteLine("Kas sulle on vaja sotsiaalne tõend? (eritoetus) jah/ei: ");
-                        string eritoetusValik = Console.ReadLine();
-                        if (eritoetusValik.ToLower() == "jah")
-                            õpilane2.KasOnSotsTõend = true;
-
-                        palgasaajad.Add(õpilane2);
-                        minuKool.LisaInimene(õpilane2);
-                    }
-
-                    else if (valik.ToLower() == "vaata palga")
-                    {
-                        foreach (ITööline isik in palgasaajad)
-                        {
-                            string tüüp = isik.VäljamakseTüüp.ToString().ToLower();
-                            Console.WriteLine($"{tüüp} summa: {isik.ArvutaPalk()} eurot. {((Isik)isik).Nimi}");
-                        }
-                    }
-
-                    else if (valik.ToLower() == "koolimaja")
-                    {
-                        Console.WriteLine($"Kõik inimeste arv: {Isik.InimesteKoguarv}");
-                        minuKool.KuvaKõik();
-                    }
-
-                    else if (valik.ToLower() == "otsi")
-                    {
-                        Console.WriteLine("Kirjuta sünniaasta või nimi: ");
-                        string Andmed = Console.ReadLine();
-                        if (int.TryParse(Andmed, out int sünniaasta))
-                        {
-                            minuKool.Otsi(sünniaasta);
-                        }
-                        else
-                        {
-                            minuKool.Otsi(Andmed);
-                        }
-                    }
-
-                    else if (valik.ToLower() == "salvesta faili")
-                    {
-                        minuKool.SalvestaFaili(path);
-                    }
-
-
                 }
+
                 catch (Exception e)
                 {
                     Console.WriteLine(e);
