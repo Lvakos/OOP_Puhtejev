@@ -33,6 +33,7 @@ namespace OOP_Puhtejev
                 inimesed.AddRange(uuedInimesed);
             }
 
+            // 1. Otsing nime järgi (võtab vastu stringi)
             public void Otsi(string otsitavNimi)
             {
                 Console.WriteLine($"\nOtsime nime: {otsitavNimi}");
@@ -42,6 +43,7 @@ namespace OOP_Puhtejev
                 }
             }
 
+            // 2. Otsing nimekirjas numbri/sünniaasta järgi (sama nimi, aga võtab vastu int)
             public void Otsi(int sünniaasta)
             {
                 Console.WriteLine($"\nOtsime kedagi, kellel tunnitasu on: {sünniaasta}");
@@ -62,6 +64,15 @@ namespace OOP_Puhtejev
                         }
                     }
                 }
+
+            public void KuvaAinultÕpilased()
+            {
+                Console.WriteLine("\n--- AINULT ÕPILASED ---");
+                foreach (var õpilane in inimesed.OfType<Õpilane>().ToList())
+                {
+                    Console.WriteLine(õpilane.Kirjelda());
+                }
+            }
 
             }
 
@@ -97,6 +108,11 @@ namespace OOP_Puhtejev
             minuKool.LisaInimene(olga);
             minuKool.LisaInimene(irina);
 
+            Kursus programmeerimine = new Kursus { Nimi = "C# algkursus", VastutavÕpetaja = irina };
+            programmeerimine.KuvaInfo();
+
+            minuKool.KuvaAinultÕpilased();
+
             while (true)
             {
                 Console.WriteLine("\n--- KOOLI PROGRAMM ---");
@@ -111,6 +127,8 @@ namespace OOP_Puhtejev
                     5. Vaata koguinimeste arv
                     6. Koolimaja inimene otsimine
                     7. Salvesta inimesed failis 
+                    8. Kuva ainult õpilased
+                    9. Loo kursus ja kuva info
                     """);
 
                 try
@@ -223,6 +241,31 @@ namespace OOP_Puhtejev
                         case "7":
                             minuKool.SalvestaFaili(path);
                             break;
+
+                        case "8":
+                            minuKool.KuvaAinultÕpilased();
+                            break;
+
+                        case "9":
+                            Console.WriteLine("Kursuse nimi?: ");
+                            string kursuseNimi = Console.ReadLine();
+
+                            Console.WriteLine("Vastutava õpetaja nimi?: ");
+                            string õpetajaNimi = Console.ReadLine();
+
+                            Õpetaja vastutavÕpetaja = minuKool.inimesed.OfType<Õpetaja>().FirstOrDefault(õ => õ.Nimi.Equals(õpetajaNimi, StringComparison.OrdinalIgnoreCase));
+
+                            if (vastutavÕpetaja != null)
+                            {
+                                Kursus uusKursus = new Kursus { Nimi = kursuseNimi, VastutavÕpetaja = vastutavÕpetaja };
+                                uusKursus.KuvaInfo();
+                            }
+                            else
+                            {
+                                Console.WriteLine($"Õpetajat nimega '{õpetajaNimi}' ei leitud süsteemist! Palun lisa õpetaja esmalt.");
+                            }
+                            break;
+
                         default:
                             Console.WriteLine("Valik puudub");
                             break;
