@@ -143,7 +143,17 @@ namespace OOP_Puhtejev
                             õpetaja2.Nimi = Console.ReadLine();
 
                             Console.WriteLine("Sünniaasta?: ");
-                            õpetaja2.Sünniaasta = int.Parse(Console.ReadLine());
+                            int aast = int.Parse(Console.ReadLine());
+
+                            if (aast > 1900 && aast < 2026)
+                            {
+                                õpetaja2.Sünniaasta = aast;
+                            }
+                            else
+                            {
+                                Console.WriteLine("Vigane sünniaasta!");
+                                break;
+                            }
 
                             Console.WriteLine("Tunnitasu? (nt 13.8): ");
                             õpetaja2.Tunnitasu = double.Parse(Console.ReadLine());
@@ -166,7 +176,17 @@ namespace OOP_Puhtejev
                             direktor.Nimi = Console.ReadLine();
 
                             Console.WriteLine("Sünniaasta?: ");
-                            direktor.Sünniaasta = int.Parse(Console.ReadLine());
+                            int aastdir = int.Parse(Console.ReadLine());
+
+                            if (aastdir > 1900 && aastdir < 2026)
+                            {
+                                direktor.Sünniaasta = aastdir;
+                            }
+                            else
+                            {
+                                Console.WriteLine("Vigane sünniaasta!");
+                                break;
+                            }
 
                             Console.WriteLine("Tunnitasu? (nt 13.8): ");
                             direktor.Tunnitasu = double.Parse(Console.ReadLine());
@@ -188,7 +208,17 @@ namespace OOP_Puhtejev
                             õpilane2.Nimi = Console.ReadLine();
 
                             Console.WriteLine("Sünniaasta?: ");
-                            õpilane2.Sünniaasta = int.Parse(Console.ReadLine());
+                            int õpilaneaast = int.Parse(Console.ReadLine());
+
+                            if (õpilaneaast > 1900 && õpilaneaast < 2026)
+                            {
+                                õpilane2.Sünniaasta = õpilaneaast;
+                            }
+                            else
+                            {
+                                Console.WriteLine("Vigane sünniaasta!");
+                                break;
+                            }
 
                             Console.WriteLine("Kus sa õpid?: ");
                             õpilane2.Kool = Console.ReadLine();
