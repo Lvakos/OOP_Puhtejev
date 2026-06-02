@@ -27,12 +27,12 @@ namespace OOP_Puhtejev
             return $"Mina olen õpetaja {Nimi} ja ma õpetan: {Aine}. Minu palk on {ArvutaPalk()}.";
         }
 
-        public Õpetaja() : base() // kutsume baasklassi konstruktorit
+        public Õpetaja() : base()
         {
-            // Siin saame teha täiendavaid initsialiseerimisi, kui vaja
+
         }
 
-        public Õpetaja(string nimi, string aine, int sünniaasta) : base(nimi, sünniaasta) // Kutsume baasklassi
+        public Õpetaja(string nimi, string aine, int sünniaasta) : base(nimi, sünniaasta)
         {
             Nimi = nimi;
             Aine = aine;
