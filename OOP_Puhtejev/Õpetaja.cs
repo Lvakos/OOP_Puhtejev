@@ -4,7 +4,7 @@ using System.Text;
 
 namespace OOP_Puhtejev
 {
-    public class Õpetaja : Isik, ITööline
+    public class Õpetaja : Isik, ITööline, IHindaja
     {
         public string Aine { get; set; }
         public TööTüüp VäljamakseTüüp { get; set; } = TööTüüp.Palk;
@@ -15,6 +15,11 @@ namespace OOP_Puhtejev
         public void Õpeta()
         {
             Console.WriteLine($"{Nimi} õpetab ainet: {Aine}.");
+        }
+
+        public void Hinda(string hinne)
+        {
+            Console.WriteLine($"{Nimi} pani hinde: {hinne}");
         }
 
         public double ArvutaPalk()

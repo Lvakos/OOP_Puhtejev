@@ -66,14 +66,15 @@ namespace OOP_Puhtejev
                     }
                 }
 
-            public void KuvaAinultÕpilased()
-            {
-                Console.WriteLine("\n--- AINULT ÕPILASED ---");
-                foreach (var õpilane in inimesed.OfType<Õpilane>().ToList())
+                public void KuvaAinultÕpilased()
                 {
-                    Console.WriteLine(õpilane.Kirjelda());
+                    Console.WriteLine("--- AINULT ÕPILASED ---");
+                    foreach (var õpilane in inimesed.OfType<Õpilane>().ToList())
+                    {
+                        Console.WriteLine(õpilane.Kirjelda());
+                    }
+
                 }
-            }
 
             }
 
@@ -101,6 +102,15 @@ namespace OOP_Puhtejev
             õpilane1.Keskminehinne = 4;
             õpilane1.KasOnSotsTõend = false;
 
+            Üliõpilane üliõpilane1 = new Üliõpilane();
+
+            üliõpilane1.Nimi = "Karl";
+            üliõpilane1.Sünniaasta = 2003;
+            üliõpilane1.Kool = "TalTech";
+            üliõpilane1.Klass = 2;
+            üliõpilane1.Staatus = Õppevorm.Päevane;
+            üliõpilane1.Eriala = "Informaatika";
+
             Õpilane olga = new Õpilane("Olga", "TTHK", 9, 2009);
 
             Console.WriteLine($"Toetus on: {õpilane1.ArvutaPalk()} eur.");
@@ -108,6 +118,7 @@ namespace OOP_Puhtejev
             Koolihaldus minuKool = new Koolihaldus();
             minuKool.LisaInimene(olga);
             minuKool.LisaInimene(irina);
+            minuKool.LisaInimene(üliõpilane1);
 
             Kursus programmeerimine = new Kursus { Nimi = "C# algkursus", VastutavÕpetaja = irina };
             programmeerimine.KuvaInfo();
@@ -127,9 +138,11 @@ namespace OOP_Puhtejev
                     4. Vaata palga
                     5. Vaata koguinimeste arv
                     6. Koolimaja inimene otsimine
-                    7. Salvesta inimesed failis 
+                    7. Salvesta inimesed failis
                     8. Kuva ainult õpilased
                     9. Loo kursus ja kuva info
+                    10. Pane hinne
+                    11. Üliõpilane lisamine
                     """);
 
                 try
@@ -295,6 +308,76 @@ namespace OOP_Puhtejev
                             {
                                 Console.WriteLine($"Õpetajat nimega '{õpetajaNimi}' ei leitud süsteemist! Palun lisa õpetaja esmalt.");
                             }
+                            break;
+
+                        case "10":
+
+                            Console.WriteLine("Õpetaja nimi:");
+                            string õpetajaNimi2 = Console.ReadLine();
+
+                            Õpetaja hindaja = minuKool.inimesed.OfType<Õpetaja>().FirstOrDefault(o => o.Nimi.Equals(õpetajaNimi2,StringComparison.OrdinalIgnoreCase));
+
+                            if (hindaja == null)
+                            {
+                                Console.WriteLine("Õpetajat ei leitud!");
+                                break;
+                            }
+
+                            Console.WriteLine("Sisesta hinne:");
+                            string hinne = Console.ReadLine();
+
+                            hindaja.Hinda(hinne);
+
+                            break;
+
+                        case "11":
+
+                            Üliõpilane üliõpilane = new Üliõpilane();
+
+                            Console.WriteLine("Sinu nimi?: ");
+                            üliõpilane.Nimi = Console.ReadLine();
+
+                            Console.WriteLine("Sünniaasta?: ");
+                            int üliaast = int.Parse(Console.ReadLine());
+
+                            if (üliaast > 1900 && üliaast < 2026)
+                            {
+                                üliõpilane.Sünniaasta = üliaast;
+                            }
+                            else
+                            {
+                                Console.WriteLine("Vigane sünniaasta!");
+                                break;
+                            }
+
+                            Console.WriteLine("Ülikool?: ");
+                            üliõpilane.Kool = Console.ReadLine();
+
+                            Console.WriteLine("Mitmendal kursusel õpid?: ");
+                            üliõpilane.Klass = int.Parse(Console.ReadLine());
+
+                            Console.WriteLine("Eriala?: ");
+                            üliõpilane.Eriala = Console.ReadLine();
+
+                            Console.WriteLine("Keskmine hinne?: ");
+                            üliõpilane.Keskminehinne = double.Parse(Console.ReadLine());
+
+                            Console.WriteLine("Puudumiste arv?: ");
+                            üliõpilane.Puudumised = int.Parse(Console.ReadLine());
+
+                            Console.WriteLine("Kas on sotsiaalne tõend? (jah/ei): ");
+                            string sots = Console.ReadLine();
+
+                            üliõpilane.KasOnSotsTõend =
+                                sots.Equals("jah", StringComparison.OrdinalIgnoreCase);
+
+                            üliõpilane.Staatus =
+                                vormid[rnd.Next(vormid.Length)];
+
+                            palgasaajad.Add(üliõpilane);
+                            minuKool.LisaInimene(üliõpilane);
+
+                            Console.WriteLine("Üliõpilane lisatud!");
                             break;
 
                         default:
