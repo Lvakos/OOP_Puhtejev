@@ -55,6 +55,7 @@ namespace OOP_Puhtejev
                 }
             }
 
+            // 3. Salvesta kõik failis
             public void SalvestaFaili(string failinimi)
                 {
                     using (StreamWriter writer = new StreamWriter(failinimi))
@@ -66,22 +67,24 @@ namespace OOP_Puhtejev
                     }
                 }
 
-                public void KuvaAinultÕpilased()
+            // 4. Kuva ainult õpilased
+            public void KuvaAinultÕpilased()
+            {
+                Console.WriteLine("--- AINULT ÕPILASED ---");
+                foreach (var õpilane in inimesed.OfType<Õpilane>().ToList())
                 {
-                    Console.WriteLine("--- AINULT ÕPILASED ---");
-                    foreach (var õpilane in inimesed.OfType<Õpilane>().ToList())
-                    {
-                        Console.WriteLine(õpilane.Kirjelda());
-                    }
-
+                    Console.WriteLine(õpilane.Kirjelda());
                 }
 
             }
+
+        }
 
         static void Main(string[] args)
         {
             string path = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "inimesed.txt");
 
+            // Inimese lisamine
             Console.WriteLine("{==== Õpetajad ====}");
             Õpetaja õpetaja1 = new Õpetaja();
             õpetaja1.Nimi = "Marina";
@@ -115,19 +118,23 @@ namespace OOP_Puhtejev
 
             Console.WriteLine($"Toetus on: {õpilane1.ArvutaPalk()} eur.");
             List<ITööline> palgasaajad = new List<ITööline>();
+            // Lisamine inimese ühe listis
             Koolihaldus minuKool = new Koolihaldus();
+            
             minuKool.LisaInimene(olga);
             minuKool.LisaInimene(irina);
             minuKool.LisaInimene(üliõpilane1);
 
+            // Kursuse lisamine
             Kursus programmeerimine = new Kursus { Nimi = "C# algkursus", VastutavÕpetaja = irina };
+
             programmeerimine.KuvaInfo();
 
             minuKool.KuvaAinultÕpilased();
 
             while (true)
             {
-                Console.WriteLine("\n--- KOOLI PROGRAMM ---");
+                Console.WriteLine("--- KOOLI PROGRAMM ---");
                 Random rnd = new Random();
                 Õppevorm[] vormid = (Õppevorm[])Enum.GetValues(typeof(Õppevorm));
                 Console.WriteLine("""
