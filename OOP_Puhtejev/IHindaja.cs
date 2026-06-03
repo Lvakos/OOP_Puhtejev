@@ -4,6 +4,6 @@ namespace OOP_Puhtejev
 {
     public interface IHindaja
     {
-        void Hinda(string hinne);
+        void Hinda(string hinne, string opilane);
     }
 }

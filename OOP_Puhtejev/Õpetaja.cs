@@ -17,9 +17,9 @@ namespace OOP_Puhtejev
             Console.WriteLine($"{Nimi} õpetab ainet: {Aine}.");
         }
 
-        public void Hinda(string hinne)
+        public void Hinda(string hinne, string opilane)
         {
-            Console.WriteLine($"{Nimi} pani hinde: {hinne}");
+            Console.WriteLine($"{Nimi} pani hinde: {hinne} õpilastele {opilane}");
         }
 
         public double ArvutaPalk()

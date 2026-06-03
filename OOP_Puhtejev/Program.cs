@@ -332,9 +332,25 @@ namespace OOP_Puhtejev
 
                             Console.WriteLine("Sisesta hinne:");
                             string hinne = Console.ReadLine();
+                            if (int.Parse(hinne) < 0 || int.Parse(hinne) > 5)
+                            {
+                                Console.WriteLine("Vigane hinne");
+                                break;
+                            }
 
-                            hindaja.Hinda(hinne);
+                            Console.WriteLine("Sisesta õpilane kellele hinne pani:");
+                            string opilane = Console.ReadLine();
 
+                            Õpilane opilanecheck = minuKool.inimesed.OfType<Õpilane>().FirstOrDefault(õ => õ.Nimi.Equals(opilane, StringComparison.OrdinalIgnoreCase));
+
+                            if (opilanecheck != null)
+                            {
+                                hindaja.Hinda(hinne, opilane);
+                            }
+                            else
+                            {
+                                Console.WriteLine($"Õpilane nimega '{opilane}' ei leitud süsteemist! Palun lisa õpetaja esmalt.");
+                            }
                             break;
 
                         case "11":
